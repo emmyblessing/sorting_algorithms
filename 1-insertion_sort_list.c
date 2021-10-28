@@ -1,7 +1,7 @@
 #include "sort.h"
 
 /**
- * swap_left: swap two nodes right left position
+ * swap_left -swap two nodes right left position
  * @list: list
  *Return: NULL
  *
@@ -10,25 +10,25 @@ void swap_left(listint_t *list)
 {
 	listint_t *tmp, *head;
 
-	while (list->previous != NULL)
+	while (list->prev != NULL)
 	{
-		if (list->n < list->previous->n)
+		if (list->n < list->prev->n)
 		{
-			tmp = list->previous->previous;
-			list->previous->next = list->next;
-			list->next = list->previous;
-			list->previous->previous = list;
-			list->previous = tmp;
-			list->next->next->previous = list->next;
+			tmp = list->prev->prev;
+			list->prev->next = list->next;
+			list->next = list->prev;
+			list->prev->prev = list;
+			list->prev = tmp;
+			list->next->next->prev = list->next;
 			if (tmp != NULL)
 				tmp->next = list;
 			head = list;
-			while (head->previous != NULL)
-				head = head->previous;
+			while (head->prev != NULL)
+				head = head->prev;
 			print_list(head);
 		}
 		else
-			list = list->previous;
+			list = list->prev;
 	}
 }
 
@@ -41,21 +41,21 @@ void swap_right(listint_t *l)
 {
 	listint_t *tmp, *head;
 
-	tmp = l->previous;
+	tmp = l->prev;
 
 	if (tmp != NULL)
 	{
 		tmp->next = l->next;
-		l->next->previous = tmp;
+		l->next->prev = tmp;
 	}
 	else
-		l->next->previous = NULL;
-	l->previous = l->next;
+		l->next->prev = NULL;
+	l->prev = l->next;
 	if (l->next->next != NULL)
 	{
 		l->next = l->next->next;
-		l->previous->next = l;
-		l->next->previous = l;
+		l->prev->next = l;
+		l->next->prev = l;
 	}
 	else
 	{
@@ -63,10 +63,10 @@ void swap_right(listint_t *l)
 		l->next = NULL;
 	}
 	head = l;
-	while (head->previous != NULL)
-		head = head->previous;
+	while (head->prev != NULL)
+		head = head->prev;
 	print_list(head);
-	swap_left(l->previous);
+	swap_left(l->prev);
 }
 
 /**
@@ -91,6 +91,6 @@ void insertion_sort_list(listint_t **list)
 		else
 			l = l->next;
 	}
-	while ((*list)->previous != NULL)
-		*list = (*list)->previous;
+	while ((*list)->prev != NULL)
+		*list = (*list)->prev;
 }
